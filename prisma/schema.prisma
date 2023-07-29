@@ -11,13 +11,13 @@ datasource db {
 }
 
 model User {
-  aai     String @id
-  name    String
-  surname String
-  title   String
-  email   String
-  iat     String
-  exp     String
+  aai       String  @id
+  firstName String
+  lastName  String
+  title     String?
+  email     String?
+  iat       Int
+  exp       Int
 
   statistics UserStatistics?
 }
@@ -28,5 +28,5 @@ model UserStatistics {
   solvedCourses Int //out of 8
   gpa           Float //1.00 - 5.00 
 
-  user User @relation(fields: [userAai], references: [aai])
+  user User @relation(fields: [userAai], references: [aai], onDelete: Cascade)
 }

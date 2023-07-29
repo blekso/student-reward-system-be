@@ -16,6 +16,7 @@ export class AuthController {
   ) {
     try {
       await this.authService.createUser(dto);
+
       response.cookie('accessToken', dto.jwt);
     } catch (err) {
       return new ResponseError('AUTH.REDIRECT', err);

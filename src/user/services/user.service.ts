@@ -1,20 +1,17 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateUserDto } from '../dto';
+import { UserDto } from '../dto';
 
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async getByAai(aai: string) {
-    const user = await this.prisma.user.findUnique({
+    return await this.prisma.user.findUnique({
       where: {
         aai,
       },
     });
-
-    if (!user) throw new HttpException('USER.NOT_FOUND', HttpStatus.NOT_FOUND);
-    return user;
   }
 
   async getCurrent(aai: string) {
@@ -31,11 +28,17 @@ export class UserService {
     return user;
   }
 
-  async create(dto: CreateUserDto) {
+  async create(dto: UserDto) {
     try {
       return await this.prisma.user.create({
         data: {
-          ...dto,
+          aai: 'test',
+          firstName: dto.ime,
+          lastName: dto.prezime,
+          title: dto.titula,
+          email: dto.email,
+          iat: dto.iat,
+          exp: dto.exp,
           statistics: {
             create: {
               solvedCourses: Math.floor(Math.random() * 8) + 1,

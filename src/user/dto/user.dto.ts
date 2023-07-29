@@ -1,33 +1,31 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class CreateUserDto {
-  @IsNotEmpty()
+export class UserDto {
+  @IsOptional()
   @IsString()
-  aai: string;
-
-  @IsNotEmpty()
-  @IsString()
-  name: string;
+  aai?: string;
 
   @IsNotEmpty()
   @IsString()
-  surname: string;
+  ime: string;
 
   @IsNotEmpty()
   @IsString()
-  title: string;
+  prezime: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  email: string;
+  titula?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  iat: string;
+  email?: string;
 
-  @IsNotEmpty()
-  @IsString()
-  exp: string;
+  @IsNumber()
+  iat: number;
+
+  @IsNumber()
+  exp: number;
 }
 
-export class UserResponse extends CreateUserDto {}
+export class UserResponse extends UserDto {}
