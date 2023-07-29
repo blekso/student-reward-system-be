@@ -2,6 +2,7 @@ import { Controller, Get, Query, Redirect, Res } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { Response } from 'express';
 import { HandleRedirectDto } from '../dto/handle-redirect.dto';
+import { ResponseError } from 'src/common/dto/response.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -13,7 +14,11 @@ export class AuthController {
     @Query() dto: HandleRedirectDto,
     @Res({ passthrough: true }) response: Response,
   ) {
-    console.log(dto.jwt);
-    response.cookie('accessToken', dto.jwt);
+    try {
+      await this.authService.createUser(dto);
+      response.cookie('accessToken', dto.jwt);
+    } catch (err) {
+      return new ResponseError('AUTH.REDIRECT', err);
+    }
   }
 }

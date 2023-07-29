@@ -1,6 +1,13 @@
 # compiled output
 /dist
 /node_modules
+/data
+/dbData
+
+.env
+.env.example
+.env.local
+.env.staging
 
 # Logs
 logs
@@ -33,3 +40,7 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+.env
+
+.serverless/

@@ -18,4 +18,15 @@ model User {
   email   String
   iat     String
   exp     String
+
+  statistics UserStatistics?
+}
+
+model UserStatistics {
+  userAai String @id
+
+  solvedCourses Int //out of 8
+  gpa           Float //1.00 - 5.00 
+
+  user User @relation(fields: [userAai], references: [aai])
 }
