@@ -20,6 +20,7 @@ model User {
   exp       Int
 
   statistics UserStatistics?
+  claims     Claim[]
 }
 
 model UserStatistics {
@@ -29,4 +30,38 @@ model UserStatistics {
   gpa           Float //1.00 - 5.00 
 
   user User @relation(fields: [userAai], references: [aai], onDelete: Cascade)
+}
+
+model Claim {
+  id Int @id @default(autoincrement())
+
+  userAai  String
+  tokenId  Int
+  rewardId Int
+
+  user   User   @relation(fields: [userAai], references: [aai], onDelete: Cascade)
+  reward Reward @relation(fields: [rewardId], references: [id], onDelete: Cascade)
+}
+
+model Reward {
+  id Int @id @default(autoincrement())
+
+  name            String
+  description     String
+  contractAddress String
+  imageUrl        String
+
+  claims         Claim[]
+  claimCondition ClaimCondition?
+}
+
+model ClaimCondition {
+  id Int @id @default(autoincrement())
+
+  rewardId      Int    @unique
+  solvedCourses Int //out of 8
+  gpa           Float //1.00 - 5.00 
+  reward        Reward @relation(fields: [rewardId], references: [id], onDelete: Cascade)
+
+  @@unique([solvedCourses, gpa])
 }

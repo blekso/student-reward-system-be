@@ -16,8 +16,8 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get(':aai')
-  @UseGuards(JwtGuard)
-  @ApiBearerAuth('JWT-auth')
+  //@UseGuards(JwtGuard)
+  //@ApiBearerAuth('JWT-auth')
   @ApiOperation({
     tags: [`User`],
     summary: 'Get User by aai',

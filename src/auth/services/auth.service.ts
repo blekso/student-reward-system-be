@@ -6,19 +6,36 @@ import { HandleRedirectDto } from '../dto/handle-redirect.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private userService: UserService,
-    private jwtService: JwtService,
-  ) {}
+  constructor(private userService: UserService, private jwt: JwtService) {}
 
-  async createUser(dto: HandleRedirectDto) {
-    const decodedUserDto = this.jwtService.decode(dto.jwt);
+  async handleRedirect(dto: HandleRedirectDto) {
+    const decodedUserDto = this.jwt.decode(dto.jwt);
 
-    const user = await this.userService.getByAai('test');
+    let user = await this.userService.getByAai('test');
     //await this.userService.getByAai(decodedUserDto.aai);
 
     if (!user) {
-      await this.userService.create(decodedUserDto as UserDto);
+      user = await this.userService.create(decodedUserDto as UserDto);
     }
+
+    const token = await this.signToken(user.aai, user.email);
+
+    return {
+      user,
+      token,
+    };
+  }
+
+  async signToken(aai: string, email: string) {
+    const payload = {
+      aai,
+      email,
+    };
+
+    const token = await this.jwt.signAsync(payload);
+
+    return {
+      access_token: token,
+    };
   }
 }

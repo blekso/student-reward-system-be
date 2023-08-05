@@ -21,6 +21,11 @@ export class UserService {
       },
       include: {
         statistics: true,
+        claims: {
+          include: {
+            reward: true,
+          },
+        },
       },
     });
 
