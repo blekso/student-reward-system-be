@@ -43,4 +43,23 @@ export class RewardController {
       return new ResponseError('REWARD.GET_USER_REWARDS', error);
     }
   }
+
+  @Get('metadata')
+  @ApiOperation({
+    tags: [`Reward`],
+    summary: 'Get Metadata',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Metadata.',
+    //type: [RewardResponse],
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Empty response.',
+    type: null,
+  })
+  async getMetadata() {
+    return await this.rewardService.getMetadata();
+  }
 }

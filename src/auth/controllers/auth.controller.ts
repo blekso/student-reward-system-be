@@ -14,12 +14,10 @@ export class AuthController {
     @Query() dto: HandleRedirectDto,
     @Res({ passthrough: true }) response: Response,
   ) {
-    console.log(dto.jwt);
     if (dto.jwt) {
       try {
         const { token } = await this.authService.handleRedirect(dto);
 
-        console.log(token);
         response.cookie('accessToken', token.access_token);
       } catch (err) {
         return new ResponseError('AUTH.REDIRECT', err);

@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import * as fs from 'fs-extra';
 
 @Injectable()
 export class RewardService {
   constructor(private prisma: PrismaService) {}
+  private readonly metadataFilePath = 'data/metadata.json';
 
   async getUserRewards(user: any) {
     const userClaimsIds = user.claims.map((el) => {
@@ -17,13 +19,17 @@ export class RewardService {
         },
         claimCondition: {
           gpa: {
-            gte: user.statistics.gpa,
+            lte: user.statistics.gpa,
           },
           solvedCourses: {
-            gte: user.statistics.solvedCourses,
+            lte: user.statistics.solvedCourses,
           },
         },
       },
     });
+  }
+
+  async getMetadata() {
+    return await fs.readJson(this.metadataFilePath);
   }
 }
