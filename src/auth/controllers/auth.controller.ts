@@ -9,7 +9,7 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Get('/handle-redirect')
-  @Redirect('http://localhost:3000/items', 302)
+  @Redirect(`${process.env.APP_URL}/items`, 302)
   async handleRedirect(
     @Query() dto: HandleRedirectDto,
     @Res({ passthrough: true }) response: Response,
