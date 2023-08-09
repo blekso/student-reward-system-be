@@ -9,10 +9,11 @@ export class CreateClaimDto {
   userAai: string;
 
   /**
-   * Token Id
+   * Transaction hash
    */
-  @IsNumber()
-  tokenId: number;
+  @IsNotEmpty()
+  @IsString()
+  txHash: string;
 
   /**
    * Reward Id

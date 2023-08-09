@@ -36,20 +36,24 @@ model Claim {
   id Int @id @default(autoincrement())
 
   userAai  String
-  tokenId  Int
+  txHash   String
   rewardId Int
 
   user   User   @relation(fields: [userAai], references: [aai], onDelete: Cascade)
   reward Reward @relation(fields: [rewardId], references: [id], onDelete: Cascade)
+
+  @@unique([userAai, rewardId])
 }
 
 model Reward {
   id Int @id @default(autoincrement())
 
-  name            String
-  description     String
-  contractAddress String
-  imageUrl        String
+  name             String
+  shortDescription String?
+  description      String
+  contractAddress  String
+  imageUrl         String
+  type             String
 
   claims         Claim[]
   claimCondition ClaimCondition?

@@ -1,15 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as fs from 'fs-extra';
 
 @Injectable()
 export class RewardService {
   constructor(private prisma: PrismaService) {}
-  private readonly metadataFilePath = 'data/metadata.json';
+
+  async getById(id: string, user: any) {
+    const reward: any = await this.prisma.reward.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+    });
+
+    const claimedReward = user.claims.find((el) => el.rewardId == reward.id);
+
+    if (claimedReward) {
+      reward.claimed = true;
+      reward.txHash = claimedReward.txHash;
+    }
+    if (!reward)
+      throw new HttpException('REWARD.NOT_FOUND', HttpStatus.NOT_FOUND);
+    return reward;
+  }
 
   async getUserRewards(user: any) {
     const userClaimsIds = user.claims.map((el) => {
-      return el.id;
+      return el.rewardId;
     });
 
     return await this.prisma.reward.findMany({
@@ -29,7 +46,7 @@ export class RewardService {
     });
   }
 
-  async getMetadata() {
-    return await fs.readJson(this.metadataFilePath);
+  async getRewardMetadata(id: string) {
+    return await fs.readJson(`data/metadata_${id}.json`);
   }
 }

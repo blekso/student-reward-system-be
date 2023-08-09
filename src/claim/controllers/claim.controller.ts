@@ -1,17 +1,23 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Post, Res, UseGuards } from '@nestjs/common';
 import { ClaimService } from '../services/claim.service';
-import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { ResponseError } from 'src/common/dto/response.dto';
 import { Response } from 'express';
 import { ClaimResponse, CreateClaimDto } from '../dto';
+import { JwtGuard } from 'src/auth/guard';
 
 @Controller('claim')
 export class ClaimController {
   constructor(private claimService: ClaimService) {}
 
   @Post()
-  //@UseGuards(JwtGuard)
-  //@ApiBearerAuth('JWT-auth')
+  @UseGuards(JwtGuard)
+  @ApiBearerAuth('JWT-auth')
   @ApiOperation({
     tags: [`Claim`],
     summary: 'Post a new claim',
