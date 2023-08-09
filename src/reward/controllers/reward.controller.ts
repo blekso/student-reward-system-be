@@ -50,6 +50,15 @@ export class RewardController {
     }
   }
 
+  @Get('metadata/:id')
+  @ApiOperation({
+    tags: [`Reward`],
+    summary: 'Get Reward Metadata',
+  })
+  async getRewardMetadata() {
+    return await this.rewardService.getRewardMetadata();
+  }
+
   @Get(':id')
   @UseGuards(JwtGuard)
   @ApiBearerAuth('JWT-auth')
@@ -86,20 +95,5 @@ export class RewardController {
       else response.status(500);
       return new ResponseError('REWARD.GET_BY_ID', error);
     }
-  }
-
-  @Get('metadata')
-  @ApiOperation({
-    tags: [`Reward`],
-    summary: 'Get Reward Metadata',
-  })
-  @ApiParam({
-    name: 'id',
-    required: true,
-    description: 'Should be an id of the reward that exists in the database',
-    type: String,
-  })
-  async getRewardMetadata(@Param('id') id: string) {
-    return await this.rewardService.getRewardMetadata(id);
   }
 }
