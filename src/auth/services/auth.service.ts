@@ -11,8 +11,6 @@ export class AuthService {
   async handleRedirect(dto: HandleRedirectDto) {
     const decodedUserDto = this.jwt.decode(dto.jwt);
 
-    console.log(decodedUserDto);
-
     let user = await this.userService.getByAai('test');
     //await this.userService.getByAai(decodedUserDto.aai);
 

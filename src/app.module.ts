@@ -5,6 +5,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { ClaimModule } from './claim/claim.module';
 import { RewardModule } from './reward/reward.module';
+import { ResetModule } from './reset/reset.module';
 import config from './config';
 
 @Module({
@@ -18,6 +19,7 @@ import config from './config';
     PrismaModule,
     ClaimModule,
     RewardModule,
+    ResetModule,
   ],
 })
 export class AppModule {}

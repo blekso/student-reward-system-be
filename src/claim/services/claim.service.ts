@@ -15,4 +15,16 @@ export class ClaimService {
       throw error;
     }
   }
+
+  async delete(aai: string) {
+    try {
+      return await this.prisma.claim.deleteMany({
+        where: {
+          userAai: aai,
+        },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
 }
