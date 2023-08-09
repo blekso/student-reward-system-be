@@ -9,8 +9,8 @@ async function bootstrap() {
   app.setGlobalPrefix('/api');
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('YVOO AUDITOR APP BACKEND')
-    .setDescription('API for Yvoo Auditor backend')
+    .setTitle('STUDENT REWARD SYSTEM BACKEND')
+    .setDescription('API for StudoReward app')
     .setVersion('1.0')
     .addBearerAuth(
       {
