@@ -66,6 +66,4 @@ model ClaimCondition {
   solvedCourses Int //out of 8
   gpa           Float //1.00 - 5.00 
   reward        Reward @relation(fields: [rewardId], references: [id], onDelete: Cascade)
-
-  @@unique([solvedCourses, gpa])
 }

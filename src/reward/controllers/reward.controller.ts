@@ -50,13 +50,19 @@ export class RewardController {
     }
   }
 
-  @Get('metadata/:id')
+  @Get('metadata/:name/:id')
   @ApiOperation({
     tags: [`Reward`],
     summary: 'Get Reward Metadata',
   })
-  async getRewardMetadata() {
-    return await this.rewardService.getRewardMetadata();
+  @ApiParam({
+    name: 'name',
+    required: true,
+    description: 'Should be an name of the reward that exists in the database',
+    type: String,
+  })
+  async getRewardMetadata(@Param('name') name: string) {
+    return await this.rewardService.getRewardMetadata(name);
   }
 
   @Get(':id')

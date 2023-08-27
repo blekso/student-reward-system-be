@@ -46,7 +46,7 @@ export class RewardService {
     });
   }
 
-  async getRewardMetadata() {
-    return await fs.readJson('data/metadata.json');
+  async getRewardMetadata(name: string) {
+    return await fs.readJson(`data/metadata_${name}.json`);
   }
 }
