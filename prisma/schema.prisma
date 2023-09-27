@@ -15,7 +15,8 @@ model User {
   firstName String
   lastName  String
   title     String?
-  email     String?
+  email     String
+  authority String?
   iat       Int
   exp       Int
 

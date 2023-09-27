@@ -17,9 +17,13 @@ export class UserDto {
   @IsString()
   titula?: string;
 
+  @IsNotEmpty()
+  @IsString()
+  email: string;
+
   @IsOptional()
   @IsString()
-  email?: string;
+  ovlasti?: string;
 
   @IsNumber()
   iat: number;

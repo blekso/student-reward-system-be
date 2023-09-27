@@ -3,16 +3,16 @@ import { JwtService } from '@nestjs/jwt';
 import { UserDto } from 'src/user/dto';
 import { UserService } from 'src/user/services/user.service';
 import { HandleRedirectDto } from '../dto/handle-redirect.dto';
+import { DecodedUser } from '../types';
 
 @Injectable()
 export class AuthService {
   constructor(private userService: UserService, private jwt: JwtService) {}
 
   async handleRedirect(dto: HandleRedirectDto) {
-    const decodedUserDto = this.jwt.decode(dto.jwt);
+    const decodedUserDto = this.jwt.decode(dto.jwt) as DecodedUser;
 
-    let user = await this.userService.getByAai('test');
-    //await this.userService.getByAai(decodedUserDto.aai);
+    let user = await this.userService.getByAai(decodedUserDto.aai);
 
     if (!user) {
       user = await this.userService.create(decodedUserDto as UserDto);

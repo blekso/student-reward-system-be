@@ -37,11 +37,12 @@ export class UserService {
     try {
       return await this.prisma.user.create({
         data: {
-          aai: 'test',
+          aai: dto.aai,
           firstName: dto.ime,
           lastName: dto.prezime,
           title: dto.titula,
           email: dto.email,
+          authority: dto.ovlasti,
           iat: dto.iat,
           exp: dto.exp,
           statistics: {
